@@ -13,15 +13,6 @@ class Worker:
         self.this_week = []
         self.next_week = []
 
-    def __int__(self, name: str, links: list[str]):
-        self.name = name
-        self.links = links
-        self.this_tasks = []
-        self.next_tasks = []
-        self.this_cards = []
-        self.next_cards = []
-        self.this_week = []
-        self.next_week = []
 
     def make_tasks(self):
         for link in self.this_week:
