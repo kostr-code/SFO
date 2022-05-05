@@ -6,28 +6,41 @@ class Worker:
     def __init__(self):
         self.name = None
         self.links = None
-        self.tasks = []
-        self.cards = []
+        self.this_tasks = []
+        self.next_tasks = []
+        self.this_cards = []
+        self.next_cards = []
+        self.this_week = []
+        self.next_week = []
 
     def __int__(self, name: str, links: list[str]):
         self.name = name
         self.links = links
-        self.tasks = []
-        self.cards = []
+        self.this_tasks = []
+        self.next_tasks = []
+        self.this_cards = []
+        self.next_cards = []
+        self.this_week = []
+        self.next_week = []
 
     def make_tasks(self):
-        for link in self.links:
-            self.cards.append(link.split('/')[-1])
+        for link in self.this_week:
+            self.this_cards.append(link.split('/')[-1].split(' ')[0])
+        for link in self.next_week:
+            self.next_cards.append(link.split('/')[-1].split(' ')[0])
         self.pars()
 
     def pars(self):
-        self.tasks = parsing.parsing(self.cards)
+        self.this_tasks = parsing.parsing(self.this_cards)
+        self.next_tasks = parsing.parsing(self.next_cards)
 
     def out(self) -> list:
-        tasks = [self.name]
-        a = 1
-        for i in self.tasks:
+        tasks = [self.name, 'Эта неделя:']
+        for i in self.this_tasks:
             s = '- ' + i
             tasks.append(s)
-            a += 1
+        tasks.append('Следующая неделя:')
+        for i in self.next_tasks:
+            s = '- ' + i
+            tasks.append(s)
         return tasks
