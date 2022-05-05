@@ -20,8 +20,10 @@ def parsing(numbers: list) -> list:
     for num in numbers:
         url = URL_TEMLATE + num
         get_r = requests.get(url, headers=headers)
-        ht = get_r.text
-        obj = json.loads(ht)
-        task_name.append(obj['title'])
-
+        if get_r.status_code != 200:
+            task_name.append(f'!!! Карточка номер: #{num} - недоступна')
+        else:
+            ht = get_r.text
+            obj = json.loads(ht)
+            task_name.append(obj['title'] + f' (#{num})')
     return task_name
