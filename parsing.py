@@ -1,9 +1,5 @@
 import requests
 import json
-import getpass
-import time
-from bs4 import BeautifulSoup
-import string
 
 
 def parsing(numbers: list) -> list:
