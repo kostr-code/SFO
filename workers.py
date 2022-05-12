@@ -35,11 +35,11 @@ class Worker:
         self.next_tasks = parsing.parsing(self.next_cards)
 
     def out(self) -> list:
-        tasks = [self.name, 'Эта неделя:']
+        tasks = ['Эта неделя:\n']
         for i in self.this_tasks:
             s = '- ' + i
             tasks.append(s)
-        tasks.append('Следующая неделя:')
+        tasks.append('\nСледующая неделя:\n')
         for i in self.next_tasks:
             s = '- ' + i
             tasks.append(s)
