@@ -18,31 +18,48 @@ def make_plan():
             parts.pop(i)
         else:
             i += 1
+    blocks = make_groups(parts)
     flag = 0
     s = []
-    for i in parts:
-        if i.find('https://') != -1:
-            s[len(s) - 1].week_make(i, flag)
-        elif i.find('недел') != -1 \
-                or i.find('след') != -1:
-            flag += 1
-        elif i.find('Отпуск') != -1 or i.find('отпуск') != -1:
-            continue
-        elif flag == 2:
-            flag = 0
-        if flag == 0:
-            name = i.split(',')
-            w = Worker()
-            w.name = name[0]
-            s.append(w)
+    for i in blocks:
+        name = i[0].split(',')
+        w = Worker()
+        w.name = name[0]
+        s.append(w)
+        flag = 0
+        for j in i:
+            if j.find('https://') != -1:
+                s[len(s) - 1].week_make(j, flag)
+            elif j.find('недел') != -1 \
+                    or j.find('след') != -1:
+                flag += 1
+            else:
+                continue
     kol = 1
     whole = s.__len__()
     for i in s:
+        i.make_tasks()
         print(f'Обрабатываем пользователя: {i.name} ({kol}/{whole})')
         kol = kol + 1
     out(s)
     end = time.time()
     print("Время работы: ", end - start)
+
+
+def make_groups(s: list):
+    """Функция разбивающая общий поток на блоки каждого работника"""
+
+    blocks = [[]]
+    i = 0
+    k = 0
+    for i in range(s.__len__()):
+        if s[i].find('[') == -1 or i == 0:
+            blocks[k].append(s[i])
+        else:
+            k += 1
+            blocks.append([])
+            blocks[k].append(s[i])
+    return blocks
 
 
 def sort_by_name(s):
