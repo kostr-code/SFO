@@ -5,7 +5,6 @@ class Worker:
 
     def __init__(self):
         self.name = None
-        self.links = None
         self.this_tasks = []
         self.next_tasks = []
         self.this_cards = []
@@ -13,34 +12,40 @@ class Worker:
         self.this_week = []
         self.next_week = []
 
-    def __int__(self, name: str, links: list[str]):
+    def __int__(self, name: str):
         self.name = name
-        self.links = links
         self.this_tasks = []
         self.next_tasks = []
         self.this_cards = []
         self.next_cards = []
         self.this_week = []
         self.next_week = []
+
+    def week_make(self, tw, flag):
+        """Блок с парсингом планов работников на эту и на следующую неделю"""
+        if flag == 1:
+            self.this_week.append(tw)
+        else:
+            self.next_week.append(tw)
 
     def make_tasks(self):
+        """Блок с созданием списка номеров карточек для последующего парсинга."""
         for link in self.this_week:
-            self.this_cards.append(link.split('/')[-1].split(' ')[0])
+            code = link.split('/')[-1].split(' ')[0]
+            if not code.isdigit() or len(code) != 7:
+                print(f'Проблема у "{self.name}" с ссылкой {link}, проверьте формат')
+            else:
+                self.this_cards.append(code)
         for link in self.next_week:
-            self.next_cards.append(link.split('/')[-1].split(' ')[0])
+            code = link.split('/')[-1].split(' ')[0]
+            if not code.isdigit() or len(code) != 7:
+                print(f'Проблема у "{self.name}" с ссылкой {link}, проверьте формат')
+            else:
+                self.next_cards.append(code)
         self.pars()
 
     def pars(self):
         self.this_tasks = parsing.parsing(self.this_cards)
         self.next_tasks = parsing.parsing(self.next_cards)
 
-    def out(self) -> list:
-        tasks = ['Эта неделя:\n']
-        for i in self.this_tasks:
-            s = '- ' + i
-            tasks.append(s)
-        tasks.append('\nСледующая неделя:\n')
-        for i in self.next_tasks:
-            s = '- ' + i
-            tasks.append(s)
-        return tasks
+

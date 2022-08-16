@@ -1,3 +1,3 @@
 @echo off
-python C:\Users\kdmar\Desktop\SFO\main.py %*
+%cd%\venv\Scripts\python.exe %cd%\main.py %*
 pause
