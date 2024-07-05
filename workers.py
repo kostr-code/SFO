@@ -32,13 +32,13 @@ class Worker:
         """Блок с созданием списка номеров карточек для последующего парсинга."""
         for link in self.this_week:
             code = link.split('/')[-1].split(' ')[0]
-            if not code.isdigit() or len(code) != 7:
+            if not code.isdigit() or len(code) < 7:
                 print(f'Проблема у "{self.name}" с ссылкой {link}, проверьте формат')
             else:
                 self.this_cards.append(code)
         for link in self.next_week:
             code = link.split('/')[-1].split(' ')[0]
-            if not code.isdigit() or len(code) != 7:
+            if not code.isdigit() or len(code) < 7:
                 print(f'Проблема у "{self.name}" с ссылкой {link}, проверьте формат')
             else:
                 self.next_cards.append(code)
