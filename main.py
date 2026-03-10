@@ -21,9 +21,9 @@ def make_plan():
     blocks = make_groups(parts)
     s = []
     for i in blocks:
-        name = i[0].split(',')
+        name = i[0].split(': ')
         w = Worker()
-        w.name = name[0]
+        w.name = name[0].split("] ")[1]
         s.append(w)
         flag = 0
         for j in i:
@@ -74,7 +74,7 @@ def out(s):
     all_person = ["Абрамов Максим",
                   "Арнольд Роман",
                   "Бородуля Вадим",
-                  "Волков Иван"
+                  "Волков Иван",
                   "Герасименко Георгий",
                   "Глазырин Юра",
                   "Городжий Дмитрий",
