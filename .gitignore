@@ -1,0 +1,8 @@
+./build
+./dist.
+./venv
+./.idea
+./.gitignore
+./*.spec
+./*.docx
+./*.txt
