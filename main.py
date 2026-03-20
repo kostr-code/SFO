@@ -106,10 +106,12 @@ def out(s):
                 else:
                     continue
     for j in s:
-        cont = j.name.split(' ')[:2]
+        cont = j.name.split(' ')
         if templ in cont:
             cont.remove(templ)
-        if j.name not in all_person:
+        if len(cont) > 2:
+            cont = cont[:2]
+        if ' '.join(j.name.split(' ')[:2]) not in all_person:
             cont.reverse()
         j.name = ' '.join(cont)
     s.sort(key=sort_by_name)
