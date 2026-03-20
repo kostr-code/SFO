@@ -5,6 +5,7 @@ from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Pt
 import os
+import re
 
 
 def make_plan():
@@ -21,9 +22,9 @@ def make_plan():
     blocks = make_groups(parts)
     s = []
     for i in blocks:
-        name = i[0].split(': ')
+        name = i[0]
         w = Worker()
-        w.name = name[0].split("] ")[1]
+        w.name = name
         s.append(w)
         flag = 0
         for j in i:
@@ -50,13 +51,14 @@ def make_groups(s: list):
 
     blocks = [[]]
     k = 0
-    for i in range(s.__len__()):
-        if s[i].find('[') == -1 or i == 0:
+    for i in range(s.__len__()-1):
+        if i == 0:
+            blocks[k].append(s[i])
+        elif re.search(r"\d\d:\d\d", s[i]) == None:
             blocks[k].append(s[i])
         else:
             k += 1
             blocks.append([])
-            blocks[k].append(s[i])
     return blocks
 
 
@@ -104,10 +106,11 @@ def out(s):
                 else:
                     continue
     for j in s:
-        cont = j.name.split(' ')
+        cont = j.name.split(' ')[:2]
         if templ in cont:
             cont.remove(templ)
-        cont.reverse()
+        if j.name not in all_person:
+            cont.reverse()
         j.name = ' '.join(cont)
     s.sort(key=sort_by_name)
     d = doc.add_paragraph()

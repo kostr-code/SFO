@@ -1,1 +1,1 @@
-pyinstaller.exe --onefile -n "SFO_2026_03_10" main.py
+pyinstaller.exe --onefile -n "SFO_2026_03_20" main.py
